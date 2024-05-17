@@ -1,0 +1,7 @@
+{
+  "name": "app-uni",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
