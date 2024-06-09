@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, forkJoin, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 
-export interface apiResult{
+export interface apiResult {
   page: number;
-  results: any[];
-  total_pages: number;
-  total_results: number;
+  next: string;
+  entries: number;
+  results: any;
 }
 
 
@@ -20,23 +20,39 @@ export class MoviesAPIService {
 
 
   constructor(private http: HttpClient) { }
+  getFilmes(): Observable<any> {
+    return this.http.get<apiResult>(
+      `https://moviesdatabase.p.rapidapi.com/titles`,
+      {
+        headers: new HttpHeaders({
+          'x-rapidapi-host': 'moviesdatabase.p.rapidapi.com',
+          'x-rapidapi-key': '563ab85cfdmsh9bc7a7f1eeb6af9p14ba12jsne4312b956f61'
+        })
+      }
+    ).pipe(
+      catchError(error => {
+          console.error('Ocorreu um erro na requisição:', error);
+          return throwError(error);
+      })
+  );
+  }
 
   getSearchMovies(name: string, page: number): Observable<apiResult> {
     return this.http.get<apiResult>(
       `https://api.themoviedb.org/3/search/movie?query=${name}&include_adult=false&language=pt-BR&api_key=dadc0c005ef5db978255b26bb089a811&page=${page}`
     );
   }
-  
-  getProviders(id: string): Observable<any> {
-    return this.http.get<apiResult>(
-      `https://api.themoviedb.org/3/movie/${id}/watch/providers`,
-      {
-        headers: new HttpHeaders({
-          'authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMmM5MzVmNDAxZTJhNDVlMDM3NjExNDMwODNkYWFmOSIsInN1YiI6IjY2M2Y4MjM5MTgwYjBkZDllOGI2MjA1YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cnygjS1KEPLff4KyZyUGwGV3DSF7iN0PUYx_Oy50TSA'
-        })
-      }
-    );
-  }
+
+  // getProviders(id: string): Observable<any> {
+  //   return this.http.get<apiResult>(
+  //     `https://api.themoviedb.org/3/movie/${id}/watch/providers`,
+  //     {
+  //       headers: new HttpHeaders({
+  //         'authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMmM5MzVmNDAxZTJhNDVlMDM3NjExNDMwODNkYWFmOSIsInN1YiI6IjY2M2Y4MjM5MTgwYjBkZDllOGI2MjA1YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cnygjS1KEPLff4KyZyUGwGV3DSF7iN0PUYx_Oy50TSA'
+  //       })
+  //     }
+  //   );
+  // }
 
   getDetails(id: string): Observable<apiResult> {
     return this.http.get<apiResult>(
@@ -81,7 +97,7 @@ export class MoviesAPIService {
       }
     );
   }
-  
+
   getPopularMovies(page: number): Observable<apiResult> {
     return this.http.get<apiResult>(
       `https://api.themoviedb.org/3/movie/popular?language=pt-BR&api_key=dadc0c005ef5db978255b26bb089a811&page=${page}`
