@@ -1,3 +1,31 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
-</ion-app>
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu Content</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-item *ngIf="!autenticado;" routerLink="/registro">Registro</ion-item>
+    <ion-item *ngIf="!autenticado;" routerLink="/login">Login</ion-item>
+    <ion-item *ngIf="autenticado;" routerLink="/home" >Filmes</ion-item>    
+    <ion-item *ngIf="autenticado;" routerLink="/grupo">Grupo</ion-item>    
+    <ion-item *ngIf="autenticado;" (click)="deslogar()">Sair</ion-item>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding"> 
+    <ion-app>
+      <ion-router-outlet></ion-router-outlet>
+    </ion-app>
+  </ion-content>
+</div>
+
+

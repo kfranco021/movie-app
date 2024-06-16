@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginModule } from './login/login.module';
 import { RegistroModule } from './registro/registro.module';
+import { GrupoModule } from './grupo/grupo.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { RegistroModule } from './registro/registro.module';
     HttpClientModule,
     RouterLink,
     LoginModule,
+    GrupoModule,
     RegistroModule,
     AngularFireModule.initializeApp(environment),
     AngularFireAuthModule

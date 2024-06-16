@@ -18,11 +18,10 @@ export interface filme {
 })
 export class HomePage implements OnInit {
   filmes: any;
-  constructor(public moviesAPIService: MoviesAPIService) { }
-  ngOnInit(): void {
-    console.log('abcd')
-
-
+  constructor(public moviesAPIService: MoviesAPIService, public router: Router) { }
+  
+  
+  ngOnInit(): void {    
     this.filmes = this.moviesAPIService.getFilmes().subscribe(
       (result: any) => {
         let resultados = result?.results
@@ -36,7 +35,11 @@ export class HomePage implements OnInit {
           console.log(filme?.primaryImage?.url)
         
         });
-      })
+      })      
+  }
+
+  navegar(rota :string) {
+    this.router.navigate([rota]);
   }
 
 }

@@ -6,6 +6,8 @@ import { GrupoComponent } from './grupo/grupo.component';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { GrupoModule } from './grupo/grupo.module';
+import { LoginModule } from './login/login.module';
 
 
 const routes: Routes = [
@@ -21,24 +23,26 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomePage,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'grupo',
     component: GrupoComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'registro',
     component: RegistroComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
 ]
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-    HomePageModule
+    HomePageModule,
+    GrupoModule,
+    LoginModule
   ],
   exports: [RouterModule]
 })
