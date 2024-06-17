@@ -22,7 +22,7 @@ export class MoviesAPIService {
   constructor(private http: HttpClient) { }
   getFilmes(): Observable<any> {
     return this.http.get<apiResult>(
-      `https://moviesdatabase.p.rapidapi.com/titles`,
+      `https://moviesdatabase.p.rapidapi.com/titles?sort=year.decr&list=top_boxoffice_200`,
       {
         headers: new HttpHeaders({
           'x-rapidapi-host': 'moviesdatabase.p.rapidapi.com',
